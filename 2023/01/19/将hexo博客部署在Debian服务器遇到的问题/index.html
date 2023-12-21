@@ -1,0 +1,830 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/meteor.png">
+  <link rel="icon" href="/img/meteor.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Elwin">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="​	主要分为两个章节，一个是nginx+hexo+git，将静态页面部署到服务器的git仓库中，并通过hooks把页面资源&#x2F;home&#x2F;hexo目录下，nginx通过域名-页面资源的映射索引到目标文件；一个是域名问题，其中涉及到ssl证书、域名映射发生冲突（本质上是对nginx各配置文件的原理的理解不够）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo+阿里云+个人域名">
+<meta property="og:url" content="http://elwinliu.com/2023/01/19/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%9C%A8Debian%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="Elwin&#39;s blog">
+<meta property="og:description" content="​	主要分为两个章节，一个是nginx+hexo+git，将静态页面部署到服务器的git仓库中，并通过hooks把页面资源&#x2F;home&#x2F;hexo目录下，nginx通过域名-页面资源的映射索引到目标文件；一个是域名问题，其中涉及到ssl证书、域名映射发生冲突（本质上是对nginx各配置文件的原理的理解不够）。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://elwinliu-blog-bucket.oss-cn-hangzhou.aliyuncs.com/elwinliu-blog/ae7b7f80be34755e72b1f455c17fdc91.png">
+<meta property="og:image" content="https://elwinliu-blog-bucket.oss-cn-hangzhou.aliyuncs.com/elwinliu-blog/image-20230119201712201.png">
+<meta property="og:image" content="https://elwinliu-blog-bucket.oss-cn-hangzhou.aliyuncs.com/elwinliu-blog/image-20230119201722414.png">
+<meta property="og:image" content="https://elwinliu-blog-bucket.oss-cn-hangzhou.aliyuncs.com/elwinliu-blog/b772c59a0bdd1d7bfc97a2320cb95df7.png">
+<meta property="og:image" content="https://elwinliu-blog-bucket.oss-cn-hangzhou.aliyuncs.com/elwinliu-blog/1364760-20220111173146165-740927078.png">
+<meta property="article:published_time" content="2023-01-19T10:39:00.000Z">
+<meta property="article:modified_time" content="2023-05-23T02:44:58.762Z">
+<meta property="article:author" content="Elwin Liu">
+<meta property="article:tag" content="Tech">
+<meta property="article:tag" content="Deploy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://elwinliu-blog-bucket.oss-cn-hangzhou.aliyuncs.com/elwinliu-blog/ae7b7f80be34755e72b1f455c17fdc91.png">
+  
+  
+  
+  <title>hexo+阿里云+个人域名 - Elwin&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"elwinliu.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"Sg3QIHwPMbAALESvgzvKHTv8-gzGzoHsz","app_key":"1ZT7L7BCx0Gl3gdcnYmXoOvL","server_url":"https://sg3qihwp.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Elwin</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>Links</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/wallpaper.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="hexo+阿里云+个人域名"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-01-19 18:39" pubdate>
+          January 19, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.2k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          36 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">hexo+阿里云+个人域名</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>​	主要分为两个章节，一个是nginx+hexo+git，将静态页面部署到服务器的git仓库中，并通过hooks把页面资源&#x2F;home&#x2F;hexo目录下，nginx通过域名-页面资源的映射索引到目标文件；一个是域名问题，其中涉及到ssl证书、域名映射发生冲突（本质上是对nginx各配置文件的原理的理解不够）。</p>
+<span id="more"></span>
+
+<h1 id="部署过程（Debian-x2F-Ubuntu）"><a href="#部署过程（Debian-x2F-Ubuntu）" class="headerlink" title="部署过程（Debian&#x2F; Ubuntu）"></a>部署过程（Debian&#x2F; Ubuntu）</h1><h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h2><p>首先安装nginx &amp; git</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get update<br>sudo apt-get install git nginx -y<br></code></pre></td></tr></table></figure>
+
+<p>测试git是否安装成功</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git --version<br></code></pre></td></tr></table></figure>
+
+<p>测试nginx是否安装成功</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">systemctl start nginx.service    <span class="hljs-comment"># 启动服务</span><br></code></pre></td></tr></table></figure>
+
+<p>去浏览器输入服务器的公网ip,看见如下图类似的画面则已经安装成功</p>
+<p><img src="https://elwinliu-blog-bucket.oss-cn-hangzhou.aliyuncs.com/elwinliu-blog/ae7b7f80be34755e72b1f455c17fdc91.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="2-创建git用户"><a href="#2-创建git用户" class="headerlink" title="2. 创建git用户"></a>2. 创建git用户</h2><p>（用root？太不明智了吧，还是另外创建一个比较好！）</p>
+<p>创建git用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo adduser git  <span class="hljs-comment"># 创建git用户</span><br>sudo passwd 123456 <span class="hljs-comment"># 设置git用户的密码</span><br></code></pre></td></tr></table></figure>
+
+<p>给git用户权限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo <span class="hljs-built_in">chmod</span> 740 /etc/sudoers   <span class="hljs-comment">#(该文件为只读，想要增加内容必须增加权限)</span><br>sudo vim /etc/sudoers<br></code></pre></td></tr></table></figure>
+
+<p>找到 <code>root ALL=(ALL:ALL) ALL</code>在其下面添加 <code>git ALL=(ALL:ALL) ALL</code></p>
+<p>修改完成后复原权限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> 400 /etc/sudoers<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-存主机的公钥"><a href="#3-存主机的公钥" class="headerlink" title="3. 存主机的公钥"></a>3. 存主机的公钥</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">su git<br><span class="hljs-built_in">mkdir</span> ~/.ssh<br>vim ~/.ssh/authorized_keys<br></code></pre></td></tr></table></figure>
+
+<p>将本地主机的<code>id_rsa.pub</code>内容复制到<code>authorized_keys</code>中即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 在本地主机上打开终端，通过ssh登入验证是否绑定成功，若不需要输入密码则为成功</span><br>ssh git@&#123;&#123;internet ip&#125;&#125;<br></code></pre></td></tr></table></figure>
+
+<p>修改这里的权限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> ~<br><span class="hljs-built_in">chmod</span> 600 .ssh/authorzied_keys<br><span class="hljs-built_in">chmod</span> 700 .ssh<br></code></pre></td></tr></table></figure>
+
+<h2 id="4-建立网站的根目录"><a href="#4-建立网站的根目录" class="headerlink" title="4. 建立网站的根目录"></a>4. 建立网站的根目录</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">su root  <span class="hljs-comment"># 切换到root用户</span><br><span class="hljs-built_in">mkdir</span> /home/hexo  <span class="hljs-comment"># 作为网站根目录</span><br><span class="hljs-built_in">chown</span> git:git -R /home/hexo <span class="hljs-comment"># 给git用户权限</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="5-配置Nginx"><a href="#5-配置Nginx" class="headerlink" title="5. 配置Nginx"></a>5. 配置Nginx</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vim /etc/nginx/sites-available/default    <span class="hljs-comment"># 编辑配置</span><br></code></pre></td></tr></table></figure>
+
+<p>修改内容</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash">server &#123;<br>    listen       80 default_server;<br>    listen       [::]:80 default_server;<br>    <span class="hljs-comment"># server_name  www.yours_server_name.com;    # 修改为自己的域名</span><br>    root         /home/hexo;    <span class="hljs-comment"># 修改为网站的根目录</span><br>    index index.html index.php index.htm;<br>    <span class="hljs-comment"># Load configuration files for the default server block.</span><br>    include /etc/nginx/default.d/*.conf;<br><br>    location / &#123;<br>    &#125;<br><br>    error_page 404 /404.html;<br>        location = /40x.html &#123;<br>    &#125;<br><br>    error_page 500 502 503 504 /50x.html;<br>        location = /50x.html &#123;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>使用<code>nginx -t</code>命令检查配置文件的语法是否出错。然后使用<code>systemctl restart nginx.service</code> 命令重启服务即可。</p>
+<h2 id="6-初始化git仓库"><a href="#6-初始化git仓库" class="headerlink" title="6. 初始化git仓库"></a>6. 初始化git仓库</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">su root<br><span class="hljs-built_in">cd</span> /home/git   <span class="hljs-comment"># 在 git 用户目录下创建</span><br>git init --bare blog.git   <span class="hljs-comment"># 一定要加上--bare</span><br><span class="hljs-built_in">chown</span> git:git -R blog.git   <span class="hljs-comment">#赋予git用户权限</span><br></code></pre></td></tr></table></figure>
+
+<p>这里使用的是<code>post-receive</code>这个钩子，当git有收发的时候就会调用这个钩子。 在<code>blog.git</code>裸库的 <code>hooks</code>文件夹中，新建<code>post-receive</code>文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vim blog.git/hooks/post-receive<br></code></pre></td></tr></table></figure>
+
+<p>在这个空白文件中加入以下语句</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/sh</span><br>git --work-tree=/home/hexo --git-dir=/home/git/blog.git checkout -f<br></code></pre></td></tr></table></figure>
+
+<p>添加权限，保证hooks能起作用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> +x /home/git/blog.git/hooks/post-receive<br></code></pre></td></tr></table></figure>
+
+<h2 id="7-本地配置"><a href="#7-本地配置" class="headerlink" title="7. 本地配置"></a>7. 本地配置</h2><p>在hexo的根目录中打开<code>_config.yml</code>文件。部署到多个平台的方法如下，branch缺省为master</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># Deployment</span><br><span class="hljs-comment">## 详情参考文档: https://hexo.io/docs/one-command-deployment</span><br><span class="hljs-attr">deploy:</span><br><span class="hljs-bullet">-</span> <span class="hljs-attr">type:</span> <span class="hljs-string">git</span><br>  <span class="hljs-attr">repo:</span> <span class="hljs-string">https://github.com/ElwinLiu/ElwinLiu.github.io.git</span><br>  <span class="hljs-attr">branch:</span> <span class="hljs-string">main</span><br><span class="hljs-bullet">-</span> <span class="hljs-attr">type:</span> <span class="hljs-string">git</span><br>  <span class="hljs-attr">repo:</span> <span class="hljs-string">git@47.***.***.***:/home/git/blog.git</span><br></code></pre></td></tr></table></figure>
+
+<p>完事就可以尝试部署了，若还有问题，请见“遇到的问题”</p>
+<h1 id="在nginx服务器上部署域名证书"><a href="#在nginx服务器上部署域名证书" class="headerlink" title="在nginx服务器上部署域名证书"></a>在nginx服务器上部署域名证书</h1><h2 id="1-下载域名的证书"><a href="#1-下载域名的证书" class="headerlink" title="1. 下载域名的证书"></a>1. 下载域名的证书</h2><p><img src="https://elwinliu-blog-bucket.oss-cn-hangzhou.aliyuncs.com/elwinliu-blog/image-20230119201712201.png" srcset="/img/loading.gif" lazyload alt="image-20230119201712201"></p>
+<p><img src="https://elwinliu-blog-bucket.oss-cn-hangzhou.aliyuncs.com/elwinliu-blog/image-20230119201722414.png" srcset="/img/loading.gif" lazyload alt="image-20230119201722414"></p>
+<h2 id="2-编辑-Nginx-根目录下的-nginx-conf-文件。修改内容如下："><a href="#2-编辑-Nginx-根目录下的-nginx-conf-文件。修改内容如下：" class="headerlink" title="2. 编辑 Nginx 根目录下的 nginx.conf 文件。修改内容如下："></a>2. 编辑 Nginx 根目录下的 <code>nginx.conf</code> 文件。修改内容如下：</h2><blockquote>
+<p>如找不到以下内容，可以手动添加。可执行命令 nginx -t ，找到nginx的配置文件路径。</p>
+<p>如下图示例：</p>
+<p><img src="https://elwinliu-blog-bucket.oss-cn-hangzhou.aliyuncs.com/elwinliu-blog/b772c59a0bdd1d7bfc97a2320cb95df7.png" srcset="/img/loading.gif" lazyload alt="tapd_10132091_base64_1665978617_57.png"></p>
+<p>此操作可通过执行 <code>vim /etc/nginx/nginx.conf</code> 命令行编辑该文件。</p>
+<p>由于版本问题，配置文件可能存在不同的写法。例如：Nginx 版本为 <code>nginx/1.15.0</code> 以上请使用 <code>listen 443 ssl</code> 代替 <code>listen 443</code> 和 <code>ssl on</code>。</p>
+</blockquote>
+<p><strong>请仔细阅读注释！</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">server</span> &#123;<br>     <span class="hljs-comment">#SSL 默认访问端口号为 443</span><br>     <span class="hljs-string">listen</span> <span class="hljs-number">443</span> <span class="hljs-string">ssl;</span> <br>     <span class="hljs-comment">#请填写绑定证书的域名</span><br>     <span class="hljs-string">server_name</span> <span class="hljs-string">cloud.tencent.com;</span> <br>     <span class="hljs-comment">#请填写证书文件的相对路径或绝对路径</span><br>     <span class="hljs-string">ssl_certificate</span> &#123;&#123;&#125;&#125;<span class="hljs-string">.crt;</span> <br>     <span class="hljs-comment">#请填写私钥文件的相对路径或绝对路径</span><br>     <span class="hljs-string">ssl_certificate_key</span> &#123;&#123;&#125;&#125;<span class="hljs-string">.key;</span> <br>     <span class="hljs-string">ssl_session_timeout</span> <span class="hljs-string">5m;</span><br>     <span class="hljs-comment">#请按照以下协议配置</span><br>     <span class="hljs-string">ssl_protocols</span> <span class="hljs-string">TLSv1.2</span> <span class="hljs-string">TLSv1.3;</span> <br>     <span class="hljs-comment">#请按照以下套件配置，配置加密套件，写法遵循 openssl 标准。</span><br>     <span class="hljs-string">ssl_ciphers</span> <span class="hljs-string">ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;</span> <br>     <span class="hljs-string">ssl_prefer_server_ciphers</span> <span class="hljs-string">on;</span><br>     <span class="hljs-string">location</span> <span class="hljs-string">/</span> &#123;<br>         <span class="hljs-comment">#网站主页路径。此路径仅供参考，具体请您按照实际目录操作。</span><br>         <span class="hljs-comment">#例如，您的网站主页在 Nginx 服务器的 /etc/www 目录下，则请修改 root 后面的 html 为 /etc/www。</span><br>         <span class="hljs-string">root</span> <span class="hljs-string">html;</span> <br>         <span class="hljs-string">index</span>  <span class="hljs-string">index.html</span> <span class="hljs-string">index.htm;</span><br>     &#125;<br> &#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-重载nginx"><a href="#3-重载nginx" class="headerlink" title="3. 重载nginx"></a>3. 重载nginx</h2><p>通过执行以下命令验证配置文件问题。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">nginx -t<br></code></pre></td></tr></table></figure>
+
+<p>通过执行以下命令重载 Nginx。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">nginx -s reload<br></code></pre></td></tr></table></figure>
+
+<p>成功以后可以访问<code>https://&#123;&#123;your domain&#125;&#125;</code>验证</p>
+<h2 id="4-http自动跳转为https（可选）"><a href="#4-http自动跳转为https（可选）" class="headerlink" title="4. http自动跳转为https（可选）"></a>4. http自动跳转为https（可选）</h2><p>在<strong>部署过程</strong>的第5点中编辑的配置文件里加跳转语句即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">vim /etc/nginx/sites-available/default    <span class="hljs-comment"># 编辑配置</span><br></code></pre></td></tr></table></figure>
+
+<p>在    <code>root         /home/hexo;    # 修改为网站的根目录</code>语句下方（只要是server花括号都可以）加以下语句</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">rewrite</span> <span class="hljs-string">^(.*)$</span> <span class="hljs-string">https://$host$1;</span> <span class="hljs-comment">#将所有HTTP请求通过rewrite指令重定向到HTTPS。</span><br></code></pre></td></tr></table></figure>
+
+<p>返回第3点，重载nginx。</p>
+<p>成功以后可以访问<code>http://&#123;&#123;your domain&#125;&#125;</code>验证，观察是否跳转到https页面</p>
+<h1 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h1><h2 id="1-server-name端口冲突"><a href="#1-server-name端口冲突" class="headerlink" title="1. server name端口冲突"></a>1. server name端口冲突</h2><p>修改nginx配置参数后，使用nginx -t检查配置.</p>
+<p>提示successfull后就可以使用 nginx -s reload来重新加载配置</p>
+<p>我配置的过程中遇到这样的问题，就是绑定了主机名后，重新加载配置时会出现警告</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">nginx: [warn] conflicting <span class="hljs-keyword">server</span> <span class="hljs-type">name</span> &quot;localhost&quot; <span class="hljs-keyword">on</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>:<span class="hljs-number">80</span>, ignored<br></code></pre></td></tr></table></figure>
+
+<p>问题根源：在server块中填写配置信息时，每个server_name（域名）只能绑定一个目录。如果出现了在不同的server块中使用了同一个server_name，且绑定了不同目录的情况，就会报上述警告。</p>
+<p>该问题不会影响服务器正常运作，但是会出现其中一个被ignored的server块的配置功能<strong>无效</strong>的情况。</p>
+<h2 id="2-访问https域名出现nginx初始化页面"><a href="#2-访问https域名出现nginx初始化页面" class="headerlink" title="2. 访问https域名出现nginx初始化页面"></a>2. 访问https域名出现nginx初始化页面</h2><p>在写<code>nginx.conf</code>配置文件时，没有修改location块中root后面的根目录路径，此处我使用的是绝对路径<code>/home/hexo</code></p>
+<h2 id="3-本地hexo-d没有推送至服务器git仓库"><a href="#3-本地hexo-d没有推送至服务器git仓库" class="headerlink" title="3. 本地hexo d没有推送至服务器git仓库"></a>3. 本地hexo d没有推送至服务器git仓库</h2><p><strong>问题分析：</strong></p>
+<p>这个问题出现的时候你会发现访问自己的域名时没有加载页面元素，空空如也。去hexo目录检查也发现是空的，hooks的配置也没有问题，问题就只能是在deploy时出现的。在初始化的时候我们没有创建分支，git仓库默认分支为master，而有些人习惯使用main分支进行推送，导致推送不成功。</p>
+<p><strong>解决方法：</strong></p>
+<p>把_config.yml文件中deploy块里branch删掉，或者写成master即可。</p>
+<h2 id="4-403-forbidden，nginx无法正常显示"><a href="#4-403-forbidden，nginx无法正常显示" class="headerlink" title="4. 403 forbidden，nginx无法正常显示"></a>4. 403 forbidden，nginx无法正常显示</h2><p><strong>问题分析：</strong></p>
+<p>一般来讲，即使hexo静态资源推送失败，nginx也至少会把index.html放在网页上，而不是403 forbidden，除非nginx啥也索引不到。通过查看nginx的错误日志，发现了<code>481 directory index of &quot;/home/hexo/&quot; is forbidden</code></p>
+<p><strong>解决方法：</strong></p>
+<p>去nginx根目录下，配置文件<code>nginx.conf</code> 加上配置 <code>autoindex on;</code>自动索引</p>
+<p><img src="https://elwinliu-blog-bucket.oss-cn-hangzhou.aliyuncs.com/elwinliu-blog/1364760-20220111173146165-740927078.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Tech/" class="category-chain-item">Tech</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Tech/">#Tech</a>
+      
+        <a href="/tags/Deploy/">#Deploy</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>hexo+阿里云+个人域名</div>
+      <div>http://elwinliu.com/2023/01/19/将hexo博客部署在Debian服务器遇到的问题/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Elwin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>January 19, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/01/21/2023%E6%96%B0%E5%B9%B4%E8%A3%81%E5%91%98%E6%BD%AE/" title="对2023美国裁员潮的记录">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">对2023美国裁员潮的记录</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/01/15/%E4%BD%BF%E7%94%A8git%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98/" title="Git使用时的网络问题">
+                        <span class="hidden-mobile">Git使用时的网络问题</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'photon-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'ElwinLiu/commit-utterances');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      鄂ICP备2023000661号-1
+    </a>
+  </span>
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
