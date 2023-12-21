@@ -227,5 +227,30 @@
   
   
   
+  <entry>
+    <title>这是模版‼️</title>
+    <link href="/1900/11/11/%E6%A8%A1%E7%89%88/"/>
+    <url>/1900/11/11/%E6%A8%A1%E7%89%88/</url>
+    
+    <content type="html"><![CDATA[<p><em>这里写序（可选）</em></p><span id="more"></span><h1 id="这是标题"><a href="#这是标题" class="headerlink" title="这是标题"></a>这是标题</h1><p>这是正文</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Thinking</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Thinking</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
   
 </search>
