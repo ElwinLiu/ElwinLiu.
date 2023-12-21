@@ -29,6 +29,31 @@
   
   
   <entry>
+    <title>test</title>
+    <link href="/2023/08/13/hello-world/"/>
+    <url>/2023/08/13/hello-world/</url>
+    
+    <content type="html"><![CDATA[<p>test !!!!</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Thinking</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Thinking</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>How to talk about doctors?</title>
     <link href="/2023/02/13/word-power-made-easy-ch4/"/>
     <url>/2023/02/13/word-power-made-easy-ch4/</url>
