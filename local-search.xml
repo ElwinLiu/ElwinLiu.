@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>【解决方案】配置了Github公钥后仍然需要账号和密码</title>
+    <link href="/2023/12/21/%E3%80%90%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E3%80%91%E9%85%8D%E7%BD%AE%E4%BA%86Github%E5%85%AC%E9%92%A5%E5%90%8E%E4%BB%8D%E7%84%B6%E9%9C%80%E8%A6%81%E8%B4%A6%E5%8F%B7%E5%92%8C%E5%AF%86%E7%A0%81/"/>
+    <url>/2023/12/21/%E3%80%90%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E3%80%91%E9%85%8D%E7%BD%AE%E4%BA%86Github%E5%85%AC%E9%92%A5%E5%90%8E%E4%BB%8D%E7%84%B6%E9%9C%80%E8%A6%81%E8%B4%A6%E5%8F%B7%E5%92%8C%E5%AF%86%E7%A0%81/</url>
+    
+    <content type="html"><![CDATA[<p><em>今天给我的新电脑重新部署hexo时发现了问题，首先是报了熟悉的错：<a href="https://elwinliu.com/2023/01/15/%E4%BD%BF%E7%94%A8git%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%84%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98/">使用git时遇到的网络问题</a>，查找解决方案的时候发现了平时被忽略的SSH&#x2F;HTTPS网络连接方式问题。</em></p><span id="more"></span><p>在把博客静态资源从Windows移植到Mac后出现了一些问题，大部分都比较容易解决，直到重新遇见了要求输入密码 + 网络的access denied 403报错， 后者按照往常的经验是查找vpn的port-挂上全局代理，比如Clash的7890端口。</p><p>另外，每次都要输入一遍密码（token）岂不麻烦，就算设置了本地保存密码，由于GitHub的密码是token，token又是有时效限制的，我不希望某一天突然登不上，又去重新生成token，重新配置本地token。</p><p>我把Mac电脑的公钥配置到github中，但在使用<code>hexo d</code>进行远程部署的时候依然要求输入密码。理论上，在我的电脑试图与github的代码仓库建立连接时，github会利用已有公钥去验证我的身份，如果匹配上了，就会放行。理论上没问题，我就检查了下config文件中github仓库的连接方式，发现时https连接，随后修改为ssh连接，问题解决。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Tech</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Tech</tag>
+      
+      <tag>Network</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Sharing Guideline</title>
     <link href="/2023/08/13/Future%20Blog%20Guidelines/"/>
     <url>/2023/08/13/Future%20Blog%20Guidelines/</url>
