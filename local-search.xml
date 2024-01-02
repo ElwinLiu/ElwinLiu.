@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>openvpn client agent problem with macOS</title>
+    <link href="/2024/01/02/openvpn%20client%20agent%20problem%20with%20macOS/"/>
+    <url>/2024/01/02/openvpn%20client%20agent%20problem%20with%20macOS/</url>
+    
+    <content type="html"><![CDATA[<p>I was having an issue using the openvpn client on: <strong>MacOS M1Pro</strong>(Apple Silicon)  <strong>Openvpn client</strong>: 3.4.1</p><p>The error messages on logs are: openvpn tranport error socket_protect_error(TCP)</p><img src="https://elwinliu-blog-bucket.oss-cn-hangzhou.aliyuncs.com/elwinliu-blog/image-20240102170646565.png" alt="image-20240102170646565" style="zoom: 33%;" /><p>After having discussion with IT department, it seems like macOS didn’t send any message to company server, and openvpn agent wasn’t initiated by client. Thereby, we need to manually starting the agent.</p><p>For the records, the workaround is the following: </p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo /Library/Frameworks/OpenVPNConnect.framework/Versions/Current/usr/sbin/ovpnagent<br></code></pre></td></tr></table></figure><p>Ref: <a href="https://github.com/OpenVPN/openvpn3/issues/258">https://github.com/OpenVPN/openvpn3/issues/258</a></p><img src="/Users/elwin/Pictures/typora-user-images/image-20240102170554274-4186470.png" alt="image-20240102170554274" style="zoom: 50%;" />]]></content>
+    
+    
+    <categories>
+      
+      <category>Network</category>
+      
+      <category>Tech</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Tech</tag>
+      
+      <tag>Network</tag>
+      
+      <tag>Opevpn</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>【解决方案】配置了Github公钥后仍然需要账号和密码</title>
     <link href="/2023/12/21/%E3%80%90%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E3%80%91%E9%85%8D%E7%BD%AE%E4%BA%86Github%E5%85%AC%E9%92%A5%E5%90%8E%E4%BB%8D%E7%84%B6%E9%9C%80%E8%A6%81%E8%B4%A6%E5%8F%B7%E5%92%8C%E5%AF%86%E7%A0%81/"/>
     <url>/2023/12/21/%E3%80%90%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E3%80%91%E9%85%8D%E7%BD%AE%E4%BA%86Github%E5%85%AC%E9%92%A5%E5%90%8E%E4%BB%8D%E7%84%B6%E9%9C%80%E8%A6%81%E8%B4%A6%E5%8F%B7%E5%92%8C%E5%AF%86%E7%A0%81/</url>
@@ -259,7 +290,7 @@
     <link href="/1900/11/11/%E6%A8%A1%E7%89%88/"/>
     <url>/1900/11/11/%E6%A8%A1%E7%89%88/</url>
     
-    <content type="html"><![CDATA[<p><em>这里写序（可选）</em></p><span id="more"></span><h1 id="这是标题"><a href="#这是标题" class="headerlink" title="这是标题"></a>这是标题</h1><p>这是正文</p><h1 id="图片测试"><a href="#图片测试" class="headerlink" title="图片测试"></a>图片测试</h1><p><img src="https://elwinliu-blog-bucket.oss-cn-hangzhou.aliyuncs.com/elwinliu-blog/16d93106d82881cd3af1ea139cdfc53c-3156902.png" alt="This is an uploaded img demo!"></p>]]></content>
+    <content type="html"><![CDATA[<p><em>这里写序（可选）</em></p><span id="more"></span><h1 id="这是标题"><a href="#这是标题" class="headerlink" title="这是标题"></a>这是标题</h1><p>这是正文</p><h1 id="图片测试"><a href="#图片测试" class="headerlink" title="图片测试"></a>图片测试</h1><p><img src="/Users/elwin/Pictures/typora-user-images/16d93106d82881cd3af1ea139cdfc53c-3156902-20240102164819448.png" alt="This is an uploaded img demo!"></p>]]></content>
     
     
     <categories>
