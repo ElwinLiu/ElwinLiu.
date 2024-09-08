@@ -29,6 +29,33 @@
   
   
   <entry>
+    <title>Kth Largest Element in an Array</title>
+    <link href="/2024/09/08/kth_element/"/>
+    <url>/2024/09/08/kth_element/</url>
+    
+    <content type="html"><![CDATA[<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.util.*;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">Scanner</span> <span class="hljs-variable">sc</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Scanner</span>(System.in);<br>        <span class="hljs-type">int</span> <span class="hljs-variable">n</span> <span class="hljs-operator">=</span> sc.nextInt();<br>        <span class="hljs-type">int</span> <span class="hljs-variable">k</span> <span class="hljs-operator">=</span> sc.nextInt();<br>        <span class="hljs-type">int</span>[] q = <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[n];<br>        <br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>            q[i] = sc.nextInt();<br>        &#125;<br>        <br>        System.out.print(find_min_k(q, <span class="hljs-number">0</span>, n - <span class="hljs-number">1</span>, k));<br>    &#125;<br>    <br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span> <span class="hljs-title function_">find_min_k</span><span class="hljs-params">(<span class="hljs-type">int</span>[] q, <span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r, <span class="hljs-type">int</span> k)</span> &#123;<br>        <span class="hljs-keyword">if</span> (l == r) &#123;<br>            <span class="hljs-keyword">return</span> q[l];<br>        &#125;<br>        <br>        <span class="hljs-type">int</span> <span class="hljs-variable">x</span> <span class="hljs-operator">=</span> q[l + r &gt;&gt; <span class="hljs-number">1</span>];<br>        <span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> l - <span class="hljs-number">1</span>, j = r + <span class="hljs-number">1</span>;<br>        <br>        <span class="hljs-keyword">while</span> (i &lt; j) &#123;<br>            <span class="hljs-keyword">do</span> i++; <span class="hljs-keyword">while</span> (q[i] &lt; x);<br>            <span class="hljs-keyword">do</span> j--; <span class="hljs-keyword">while</span> (q[j] &gt; x);<br>            <span class="hljs-keyword">if</span> (i &lt; j) &#123;<br>                <span class="hljs-type">int</span> <span class="hljs-variable">t</span> <span class="hljs-operator">=</span> q[i];<br>                q[i] = q[j];<br>                q[j] = t;<br>            &#125;<br>        &#125;<br>        <br>        <span class="hljs-type">int</span> <span class="hljs-variable">rank</span> <span class="hljs-operator">=</span> j - l + <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">if</span> (k &lt;= rank) <span class="hljs-keyword">return</span> find_min_k(q, l, j, k);<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> find_min_k(q, j + <span class="hljs-number">1</span>, r, k - rank);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Algorithm</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Algorithm</tag>
+      
+      <tag>Quick Sort</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>algo. quick_sort</title>
     <link href="/2024/09/08/algo.%20quick_sort/"/>
     <url>/2024/09/08/algo.%20quick_sort/</url>
