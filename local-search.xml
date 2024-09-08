@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Introduction of HTTPS (to be continued)</title>
+    <link href="/2024/09/08/What%20is%20Https/"/>
+    <url>/2024/09/08/What%20is%20Https/</url>
+    
+    <content type="html"><![CDATA[<h1 id="What-is-HTTPS-By-Wikipedia"><a href="#What-is-HTTPS-By-Wikipedia" class="headerlink" title="What is HTTPS(By Wikipedia)"></a>What is HTTPS(By Wikipedia)</h1><p><strong>Hypertext Transfer Protocol Secure</strong> (<strong>HTTPS</strong>) is an extension of the <a href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol">Hypertext Transfer Protocol</a> (HTTP). By encryption, Https makes data transfer in a securer way. In HTTPS, the protocol is encrypted using <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">Transport Layer Security</a> (TLS) or, <strong>formerly</strong>, Secure Sockets Layer (SSL). The protocol is therefore also referred to as <strong>HTTP over TLS</strong> or <strong>HTTP over SSL</strong></p><h1 id="Why-is-HTTPS"><a href="#Why-is-HTTPS" class="headerlink" title="Why is HTTPS"></a>Why is HTTPS</h1><p>The principal motivations of HTTPS are Authentication of the access to website and protection of data privacy and integrity while it is in transit. HTTPS prevents website from having exchanged data broadcast, which could lead to information leakage. Furthermore, browsers nowadays will mark a website, that use HTTP instead of HTTPS as insecure.</p><p><img src="https://elwinliu-blog-bucket.oss-cn-hangzhou.aliyuncs.com/elwinliu-blog/image-20240112184853184.png" alt="image-20240112184853184"></p><h1 id="How-does-HTTPS-works"><a href="#How-does-HTTPS-works" class="headerlink" title="How does HTTPS works"></a>How does HTTPS works</h1><p>HTTPS utilize encrytion protocol TLS or, formerly, Secure Socket Layer(SSL).</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Network</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Network</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>openvpn client agent problem with macOS</title>
     <link href="/2024/01/02/openvpn%20client%20agent%20problem%20with%20macOS/"/>
     <url>/2024/01/02/openvpn%20client%20agent%20problem%20with%20macOS/</url>
@@ -146,8 +171,8 @@
   
   <entry>
     <title>耶克斯-多德森定律</title>
-    <link href="/2023/01/24/%E8%80%B6%E5%85%8B%E6%96%AF-%E5%A4%9A%E5%BE%B7%E6%A3%AE%E5%AE%9A%E5%BE%8B/"/>
-    <url>/2023/01/24/%E8%80%B6%E5%85%8B%E6%96%AF-%E5%A4%9A%E5%BE%B7%E6%A3%AE%E5%AE%9A%E5%BE%8B/</url>
+    <link href="/2023/01/23/%E8%80%B6%E5%85%8B%E6%96%AF-%E5%A4%9A%E5%BE%B7%E6%A3%AE%E5%AE%9A%E5%BE%8B/"/>
+    <url>/2023/01/23/%E8%80%B6%E5%85%8B%E6%96%AF-%E5%A4%9A%E5%BE%B7%E6%A3%AE%E5%AE%9A%E5%BE%8B/</url>
     
     <content type="html"><![CDATA[<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p>耶克斯-多德森定律，指<a href="https://baike.baidu.com/item/%E5%8A%A8%E6%9C%BA/18293433?fromModule=lemma_inlink">动机</a>的最佳水平随任务的性质不同而不同：在比较简单的任务中，<a href="https://baike.baidu.com/item/%E5%B7%A5%E4%BD%9C%E6%95%88%E7%8E%87/10962702?fromModule=lemma_inlink">工作效率</a>随动机的提高而上升；而随着任务难度的增加，<a href="https://baike.baidu.com/item/%E5%8A%A8%E6%9C%BA/18293433?fromModule=lemma_inlink">动机</a>的最佳水平有逐渐下降的趋势。</p><img src="https://elwinliu-blog-bucket.oss-cn-hangzhou.aliyuncs.com/elwinliu-blog/image-20230124120342218.png" alt="image-20230124120342218" style="zoom:50%;" /><h1 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h1><p>我对这条心理学定律的两句话都有些体会，但常常困扰我的是后半句话。有时候我会拿现在的自己和小时候的自己作比较，因为我能够让自己很快拥有较强的动机，在小时候，这个优势在解决简单任务上非常明显。自己长大了以后，依然可以保持高水平的动机，但是由于任务的难度增加，根据耶克斯-多德森定律，高水平的动机反而会带来较大的负面影响。这是因为当任务难度大、动机强时，人会急于求成，产生焦虑和紧张，干扰了记忆和思维活动的顺利进行，使学习效率降低。在日常学习生活里，我常会保持高度紧张、不安、强动机的状态，于此一同到来的是心悸、高压下难以清晰思考等等问题，比如高中做数学题、大学的高数考试。在上述两个典型的难任务中，我常会想是不是自己长大就变笨了，小时候明明总拿满分，现在问题都得到了解答。</p><p>想要回顾一下自己的心路历程，可以从动机逐步变强的过程开始观察。以托福为例，在行动之前我会给自己定一个模糊的目标，比如做阅读做听力的时候可以比较自如、轻松地完成，口语题能和英文日常对话一样自然，写作可以从源源不断的语料中找到好词好句。定下目标以后，我会下意识把它当作生活的全部，以至于一看见托福题目就会肾上腺素飙升，阅读的过程像是生死决斗，在湿冷的武汉也会热的流汗。给我带来同样感受的还有篮球比赛、数学考试、刷算法题、部分专业课考试。让我哭笑不得的是，曾因为感觉过分给自己施压不对，为了减压逼迫自己去冥想，结果就是冥想的过程中心跳越来越快，一睁眼世界不知道变蓝还是变黑。</p><p>现在我也不知道解决办法是什么，但是至少有了一个清晰的方向。对于简单任务，可以利用强动机提高效率，但对于困难的任务，应该在保持动机的基础之上适当放松。应该是利用动机，而不是被动机利用。</p>]]></content>
     
@@ -204,8 +229,8 @@
   
   <entry>
     <title>对2023美国裁员潮的记录</title>
-    <link href="/2023/01/21/2023%E6%96%B0%E5%B9%B4%E8%A3%81%E5%91%98%E6%BD%AE/"/>
-    <url>/2023/01/21/2023%E6%96%B0%E5%B9%B4%E8%A3%81%E5%91%98%E6%BD%AE/</url>
+    <link href="/2023/01/20/2023%E6%96%B0%E5%B9%B4%E8%A3%81%E5%91%98%E6%BD%AE/"/>
+    <url>/2023/01/20/2023%E6%96%B0%E5%B9%B4%E8%A3%81%E5%91%98%E6%BD%AE/</url>
     
     <content type="html"><![CDATA[<h1 id="大公司裁员信息"><a href="#大公司裁员信息" class="headerlink" title="大公司裁员信息"></a>大公司裁员信息</h1><p>截至2023年1月21日</p><p><strong>谷歌</strong></p><p>谷歌CEO给员工发邮件官宣：谷歌母公司Alphabet全球裁员6%，影响12000的员工。<a href="https://redian.news/news/63889?utm_source=bbs&utm_medium=widget_news">史无前例！谷歌25年来首次大裁员1万2千人！这里是全面总结+分析！ | Redian新闻</a></p><p><strong>亚马逊</strong></p><p>官方宣布裁员18000人<a href="https://www.reuters.com/business/retail-consumer/amazon-lay-off-over-17000-workers-wsj-2023-01-04/">Amazon to cut 18,000 jobs as layoffs expand in tech sector | Reuters</a></p><p><strong>微软</strong></p><p>根据路透社报道，微软将会裁员5%的员工，大约11000人。<a href="https://www.reuters.com/technology/microsoft-cut-thousands-jobs-sky-news-2023-01-17/">Microsoft to cut thousands of jobs across divisions - reports | Reuters</a></p><p><strong>推特</strong></p><p>马斯克上来之后一顿pip、裁员，就不用说了</p><p><strong>meta</strong></p><p>继推特之后，meta裁员1.1万人<a href="https://redian.news/wxnews/140290">Meta血腥裁员1.1万人，挨骂的却始终是Twitter！ | Redian新闻</a></p><p><strong>apple</strong></p><p>苹果公司也开始裁员，但是具体数字没有公布，传言从retail员工开始</p><p><strong>一亩三分地首页记录</strong></p><p><img src="https://elwinliu-blog-bucket.oss-cn-hangzhou.aliyuncs.com/elwinliu-blog/image-20230121130201178.png" alt="image-20230121130201178"></p>]]></content>
     
