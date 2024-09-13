@@ -85,6 +85,33 @@
   
   
   <entry>
+    <title>algo. cube_root</title>
+    <link href="/2024/09/08/algo.%20cube-root/"/>
+    <url>/2024/09/08/algo.%20cube-root/</url>
+    
+    <content type="html"><![CDATA[<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.util.*;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">Scanner</span> <span class="hljs-variable">sc</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Scanner</span>(System.in);<br>        <span class="hljs-type">Double</span> <span class="hljs-variable">flt</span> <span class="hljs-operator">=</span> sc.nextDouble(), l = -<span class="hljs-number">10000.0</span>, r = <span class="hljs-number">10000.0</span>;<br>        <span class="hljs-keyword">while</span> (r - l &gt; <span class="hljs-number">1e-8</span>) &#123;<br>            <span class="hljs-type">Double</span> <span class="hljs-variable">mid</span> <span class="hljs-operator">=</span> (l + r) / <span class="hljs-number">2</span>;<br>            <span class="hljs-keyword">if</span> (mid*mid*mid &gt;= flt) r = mid;<br>            <span class="hljs-keyword">else</span> l = mid;<br>        &#125;<br>        System.out.print(String.format(<span class="hljs-string">&quot;%.6f&quot;</span>, l));<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Algorithm</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Algorithm</tag>
+      
+      <tag>Binary Search</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>algo. kth largest element in an array</title>
     <link href="/2024/09/08/kth_element/"/>
     <url>/2024/09/08/kth_element/</url>
